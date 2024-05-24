@@ -27,13 +27,23 @@
 
     padding: 0.25em 1.25em;
     border-radius: 30px;
-    background-color: var(--secondary);
+    background-color: var(--background);
+    border: 1px solid var(--text);
+    /* color: var(--background); */
     font-size: 14px;
 
     text-wrap: nowrap;
     user-select: none;
 
     cursor: pointer;
+    transition: 0.2s;
+}
+.categories > .category:hover{
+    background-color: var(--secondary);
+}
+.categories > .category.active{
+    background-color: var(--accent);
+    color: var(--background);
 }
 
 .promotion{
@@ -47,7 +57,7 @@
 }
 
 .products_title{
-    font-size: larger;
+    font-size: 20px;
     text-align: center;
     margin-bottom: 1em;
 }
@@ -63,14 +73,20 @@
     border-radius: 5px;
     overflow: hidden;
     /* background-color: #888; */
-    user-select: none;
 }
 .products > .product .img{
     position: relative;
     width: 100%;
     aspect-ratio: 1;
+    user-select: none;
 }
 .products > .product .name{
     text-align: center;
     padding-top: 0.75em;
+}
+.products > .product .price{
+    text-align: center;
+    padding-top: 0.25em;
+    opacity: 0.75;
+    font-size: 14px;
 }

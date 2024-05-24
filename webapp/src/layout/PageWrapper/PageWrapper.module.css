@@ -9,7 +9,8 @@
     flex-direction: column;
     max-width: 900px;
     width: 100%;
-    /* background-color: #999; */
+    background-color: var(--background);
+    padding: 0 1em;
 }
 .footer{
     padding-top: 2em;

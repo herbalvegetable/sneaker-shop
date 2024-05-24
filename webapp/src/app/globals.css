@@ -3,8 +3,9 @@
 :root{
     --text: black;
     --background: white;
-    --primary: #2788ce;
-    --secondary: #dedcff;
+    --primary: #2788CE;
+    --secondary: #ACB3FF;
+    --accent: #433BFF;
 }
 
 html{
@@ -15,6 +16,8 @@ body{
     margin: 0;
     padding: 0;
 
-    background-color: var(--background);
+    /* background-color: var(--background); */
+    background-image: url('/bg-tile.png');
+    background-attachment: fixed;
     color: var(--text);
 }
