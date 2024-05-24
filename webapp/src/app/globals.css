@@ -3,9 +3,10 @@
 :root{
     --text: black;
     --background: white;
-    --primary: #2788CE;
+    /* --primary: #433BFF; */
+    --primary: #5550da;
     --secondary: #ACB3FF;
-    --accent: #433BFF;
+    --accent: #2788CE;
 }
 
 html{

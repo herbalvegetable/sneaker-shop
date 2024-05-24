@@ -59,7 +59,7 @@ export default function Home() {
                     alt='Promotion' />
             </div>
             
-            <div className={styles.products_title}>LATEST SNEAK👟RS</div>
+            <div className={styles.products_title}>LATEST 👟s</div>
             <div className={styles.products}>
                 {
                     DEV_PRODUCTS.map((product, i) => {
