@@ -1,7 +1,7 @@
 .title {
     padding-top: 0.75em;
     padding-bottom: 1em;
-    font-size: 24px;
+    font-size: 28px;
     text-align: center;
     user-select: none;
 }
@@ -63,6 +63,9 @@
     background-color: var(--primary);
     cursor: pointer;
 }
+.promotion .img{
+    object-fit: contain;
+}
 
 .products_title {
     font-size: 20px;
@@ -104,10 +107,14 @@
     color: var(--background);
 }
 
-.products>.product .img {
+.products>.product .img_wrapper {
     position: relative;
+    /* display: inline-block; */
     width: 100%;
     aspect-ratio: 1;
+}
+.products>.product .img_wrapper .img{
+    object-fit: cover;
 }
 
 .products>.product .name {

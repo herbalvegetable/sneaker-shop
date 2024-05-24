@@ -55,7 +55,7 @@ export default function Home() {
                 <Image
                     src='/dev/promo2.png'
                     layout='fill'
-                    objectFit='contain'
+                    className={styles.img}
                     alt='Promotion' />
             </div>
             
@@ -66,12 +66,12 @@ export default function Home() {
                         const { name, imgSrc, price } = product;
                         return (
                             <div key={i.toString()} className={styles.product} onClick={() => {}}>
-                                <div className={styles.img}>
+                                <div className={styles.img_wrapper}>
                                     <Image 
                                         loading='lazy'
                                         src={imgSrc}
                                         layout='fill'
-                                        objectFit='cover'
+                                        className={styles.img}
                                         alt={name}/>
                                 </div>
                                 <div className={styles.name}>{name}</div>
