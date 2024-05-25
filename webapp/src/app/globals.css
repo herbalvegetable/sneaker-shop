@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
-:root{
+:root {
     --text: black;
     --background: white;
     /* --primary: #433BFF; */
@@ -9,10 +9,11 @@
     --accent: #2788CE;
 }
 
-html{
+html {
     overflow-y: scroll;
 }
-body{
+
+body {
     font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
@@ -21,4 +22,9 @@ body{
     background-image: url('/bg-tile.png');
     background-attachment: fixed;
     color: var(--text);
+}
+
+/* hide nextjs errors overlay */
+nextjs-portal {
+    display: none;
 }

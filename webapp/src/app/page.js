@@ -5,37 +5,37 @@ import Image from 'next/image';
 
 import styles from "./page.module.css";
 
+const CATEGORIES = [
+    { title: 'All', href: '/' },
+    { title: 'Nike', href: '/nike' },
+    { title: 'Adidas', href: '/adidas' },
+    { title: 'New Balance', href: '/new-balance' },
+    { title: 'Puma', href: '/puma' },
+    { title: 'Asics', href: '/asics' },
+    { title: 'Converse', href: '/converse' },
+    { title: 'Under Armour', href: '/under-armour' },
+    { title: 'Vans', href: '/vans' },
+]
+
+// placeholder products
+const DEV_PRODUCTS = [...new Array(9)].map(() => {
+    const snkrs = [
+        { name: 'Nike Air Force 1', imgSrc: '/dev/sneaker.png', price: 200 },
+        { name: 'Nike Court Legacy (Green)', imgSrc: '/dev/sneaker3.png', price: 200 },
+        { name: 'Nike Dunk High', imgSrc: '/dev/sneaker4.png', price: 200 },
+    ]
+    return snkrs[Math.floor(Math.random() * snkrs.length)];
+});
 export default function Home() {
 
     const router = useRouter();
     const pathname = usePathname()
 
-    const CATEGORIES = [
-        { title: 'All', href: '/' },
-        { title: 'Nike', href: '/nike' },
-        { title: 'Adidas', href: '/adidas' },
-        { title: 'New Balance', href: '/new-balance' },
-        { title: 'Puma', href: '/puma' },
-        { title: 'Asics', href: '/asics' },
-        { title: 'Converse', href: '/converse' },
-        { title: 'Under Armour', href: '/under-armour' },
-        { title: 'Vans', href: '/vans' },
-    ]
-
-    // placeholder products
-    const DEV_PRODUCTS = [...new Array(30)].map(() => {
-        const snkrs = [
-            { name: 'Nike Air Force 1', imgSrc: '/dev/sneaker.png', price: 200 },
-            { name: 'Nike Court Legacy (Green)', imgSrc: '/dev/sneaker3.png', price: 200 },
-            { name: 'Nike Dunk High', imgSrc: '/dev/sneaker4.png', price: 200 },
-        ]
-        return snkrs[Math.floor(Math.random() * snkrs.length)];
-    });
 
     return (
         <>
             <div className={styles.title}>
-                <span className={styles.bold}>SNEAK_R</span> 👟 SHOP
+                <span className={styles.bold}>SNEAK3R</span> 👟 SHOP
             </div>
             <div className={styles.categories}>
                 {
