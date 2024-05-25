@@ -5,24 +5,36 @@ import Image from 'next/image';
 
 import styles from "./page.module.css";
 
-const CATEGORIES = [
-    { title: 'All', href: '/' },
-    { title: 'Nike', href: '/nike' },
-    { title: 'Adidas', href: '/adidas' },
-    { title: 'New Balance', href: '/new-balance' },
-    { title: 'Puma', href: '/puma' },
-    { title: 'Asics', href: '/asics' },
-    { title: 'Converse', href: '/converse' },
-    { title: 'Under Armour', href: '/under-armour' },
-    { title: 'Vans', href: '/vans' },
-]
-
 // placeholder products
 const DEV_PRODUCTS = [...new Array(9)].map(() => {
     const snkrs = [
-        { name: 'Nike Air Force 1', imgSrc: '/dev/sneaker.png', price: 200 },
-        { name: 'Nike Court Legacy (Green)', imgSrc: '/dev/sneaker3.png', price: 200 },
-        { name: 'Nike Dunk High', imgSrc: '/dev/sneaker4.png', price: 200 },
+        { 
+            name: 'Nike Air Force 1', 
+            id: 'nike-air-force-1',
+            imgSrc: '/dev/sneaker.png', 
+            price: 200,
+            sizes: '5/5.5/6/6.5/7/7.5/8/8.5/9/9.5/10/10.5/11',
+            desc: 'Each Craft released puts a handmade feel on the AJ1 and these low-cut sneakers are no exception. Sandy neutrals come together in kicks that beg to be a part of every outfit. Premium suede adds texture while a lightly speckled outsole grounds your look with subtle detail.',
+            details: 'Nubuck Upper\nRubber Outsole\nColour: Blue',
+        },
+        { 
+            name: 'Nike Court Legacy Green',
+            id: 'nike-court-legacy-green',
+            imgSrc: '/dev/sneaker3.png', 
+            price: 200,
+            sizes: '5/5.5/6/6.5/7/7.5/8/8.5/9/9.5/10/10.5/11',
+            desc: 'Each Craft released puts a handmade feel on the AJ1 and these low-cut sneakers are no exception. Sandy neutrals come together in kicks that beg to be a part of every outfit. Premium suede adds texture while a lightly speckled outsole grounds your look with subtle detail.',
+            details: 'Nubuck Upper\nRubber Outsole\nColour: Blue',
+        },
+        { 
+            name: 'Nike Dunk High', 
+            id: 'nike-dunk-high',
+            imgSrc: '/dev/sneaker4.png', 
+            price: 200,
+            sizes: '5/5.5/6/6.5/7/7.5/8/8.5/9/9.5/10/10.5/11',
+            desc: 'Each Craft released puts a handmade feel on the AJ1 and these low-cut sneakers are no exception. Sandy neutrals come together in kicks that beg to be a part of every outfit. Premium suede adds texture while a lightly speckled outsole grounds your look with subtle detail.',
+            details: 'Nubuck Upper\nRubber Outsole\nColour: Blue',
+        },
     ]
     return snkrs[Math.floor(Math.random() * snkrs.length)];
 });
@@ -34,23 +46,6 @@ export default function Home() {
 
     return (
         <>
-            <div className={styles.title}>
-                <span className={styles.bold}>SNEAK3R</span> 👟 SHOP
-            </div>
-            <div className={styles.categories}>
-                {
-                    CATEGORIES.map((ctg, i) => {
-                        const { title, href } = ctg;
-                        const isActive = pathname === href;
-                        return (
-                            <div key={i.toString()} className={`${styles.category} ${isActive ? styles.active : ''}`} onClick={() => router.push(href)}>
-                                {title}
-                            </div>
-                        )
-                    })
-                }
-            </div>
-
             <div className={styles.promotion}>
                 <Image
                     src='/dev/promo2.png'
@@ -63,9 +58,9 @@ export default function Home() {
             <div className={styles.products}>
                 {
                     DEV_PRODUCTS.map((product, i) => {
-                        const { name, imgSrc, price } = product;
+                        const { name, id, imgSrc, price } = product;
                         return (
-                            <div key={i.toString()} className={styles.product} onClick={() => {}}>
+                            <div key={i.toString()} className={styles.product} onClick={() => router.push(`/sneaker/${id}`)}>
                                 <div className={styles.img_wrapper}>
                                     <Image 
                                         loading='lazy'

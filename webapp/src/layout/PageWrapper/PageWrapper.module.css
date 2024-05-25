@@ -11,6 +11,7 @@
     width: 100%;
     background-color: var(--background);
     padding: 0 1em;
+    box-shadow: 0 0 40px 10px var(--background);
 }
 .footer{
     padding-top: 2em;
