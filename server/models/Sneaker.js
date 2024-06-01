@@ -5,10 +5,10 @@ const { Schema } = mongoose;
 const sneakerSchema = new Schema({
 
     name: { type: String, required: true },
-    sizes: { type: String, required: true },
-    description: { type: String, required: true },
-    details: { type: String, required: true },
-    images: [String],
+    sizesStr: { type: String, required: true },
+    descBody: { type: String, required: true },
+    detailsBody: { type: String, required: true },
+    imgKeys: [String],
 
 }, { timestamps: true });
 
