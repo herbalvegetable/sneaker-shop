@@ -1,10 +1,33 @@
-.wrapper{
+.parallax {
+    perspective: 1px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.parallax_layer {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.back{
+    transform: translateZ(-6px) scale(7);
+    z-index: -10;
+    background: url('/bg-tile.png');
+}
+
+.wrapper {
     display: flex;
     flex-direction: row;
     justify-content: center;
     min-height: 100vh;
+    height: fit-content;
+    background: none;
 }
-.center{
+
+.center {
     display: flex;
     flex-direction: column;
     max-width: 900px;
@@ -13,7 +36,8 @@
     padding: 0 1em;
     box-shadow: 0 0 40px 10px var(--background);
 }
-.footer{
+
+.footer {
     padding-top: 2em;
     padding-bottom: 2em;
     text-align: center;

@@ -6,7 +6,7 @@ import Image from 'next/image';
 import styles from "./page.module.css";
 
 // placeholder products
-const DEV_PRODUCTS = [...new Array(9)].map(() => {
+const DEV_PRODUCTS = [...new Array(30)].map(() => {
     const snkrs = [
         { 
             name: 'Nike Air Force 1', 
