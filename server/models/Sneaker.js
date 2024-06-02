@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const sneakerSchema = new Schema({
 
     name: { type: String, required: true },
+    price: { type: Number, required: true },
     sizesStr: { type: String, required: true },
     descBody: { type: String, required: true },
     detailsBody: { type: String, required: true },

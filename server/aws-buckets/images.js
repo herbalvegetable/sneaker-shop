@@ -11,7 +11,7 @@ const bucket = {
     }),
 }
 
-export function uploadImage(file) {
+function _upload(file) {
     const fileStream = fs.createReadStream(file.path);
     const params = {
         Bucket: bucket.name,
@@ -21,7 +21,7 @@ export function uploadImage(file) {
     return bucket.instance.upload(params).promise();
 }
 
-export function deleteImage(fileKey) {
+function _delete(fileKey) {
     const params = {
         Bucket: bucket.name,
         Key: fileKey,
@@ -34,4 +34,9 @@ export function deleteImage(fileKey) {
             console.log(data);
         }
     });
+}
+
+module.exports = {
+    uploadImage: _upload,
+    deleteImage: _delete,
 }

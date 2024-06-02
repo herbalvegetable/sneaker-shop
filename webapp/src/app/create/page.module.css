@@ -1,0 +1,30 @@
+.header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75em;
+}
+.header .title{
+    font-size: large;
+    /* padding-bottom: 1em; */
+}
+.header .publish{
+    display: inline-block;
+    width: fit-content;
+    padding: 0.5em 1em;
+    background-color: var(--primary);
+    color: var(--background);
+    font-weight: normal;
+    font-size: 18px;
+    border: none;
+    border-radius: 3px;
+    border: 2px solid var(--primary);
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+.header .publish:hover{
+    background-color: var(--secondary);
+    color: var(--text);
+}

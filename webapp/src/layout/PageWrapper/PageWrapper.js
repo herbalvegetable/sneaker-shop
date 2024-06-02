@@ -26,7 +26,7 @@ export default function PageWrapper({ children }) {
                 <div className={styles.center}>
                     <Header />
                     {children}
-                    <footer className={styles.footer}>SNEAK3R SHOP © {new Date().getFullYear()} | Ben Aw Yong</footer>
+                    <footer className={styles.footer}>SN3AKS © {new Date().getFullYear()} | Ben Aw Yong</footer>
                 </div>
             </div>
         </div>

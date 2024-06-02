@@ -1,0 +1,246 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    flex: 1;
+    gap: 1em;
+}
+@media(max-width: 600px){
+    .wrapper{
+        flex-direction: column;
+        gap: 0 !important;
+    }
+}
+
+.slideshow {
+    flex: 5;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+
+    margin-bottom: 2em;
+}
+
+.slideshow .current_slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--medium);
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: auto;
+    border-radius: 3px;
+    margin-bottom: 0.5em;
+}
+
+.slideshow .current_slide .img {
+    width: 100%;
+    height: 100%;
+}
+
+.slideshow .slides {
+    display: grid;
+    flex-direction: row;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5em;
+}
+
+.slideshow .slides>.slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    width: 100%;
+    aspect-ratio: 1/1;
+    height: 100%;
+    background-color: var(--medium);
+}
+
+.slideshow .slides>.slide .img {
+    width: 100%;
+    height: 100%;
+}
+
+.slideshow .img_upload {
+    display: flex;
+    flex-direction: column;
+}
+
+.slideshow .img_upload .title {
+    padding-bottom: 0.5em;
+}
+
+.slideshow .img_upload .uploads {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    user-select: none;
+}
+@media(min-width: 600px) {
+    .slideshow .img_upload .uploads {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media(min-width: 800px) {
+    .slideshow .img_upload .uploads {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+.slideshow .img_upload .uploads>.box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    aspect-ratio: 1/1;
+    background-color: var(--medium);
+}
+.slideshow .img_upload .uploads>.box:first-child{
+    outline: 2px solid var(--primary);
+}
+.slideshow .img_upload .uploads>.upload {
+    
+}
+.slideshow .img_upload .uploads>.upload .label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+.slideshow .img_upload .uploads>.upload .label .icon{
+    font-size: 50px;
+}
+.slideshow .img_upload .uploads>.blank {
+
+}
+.slideshow .img_upload .uploads>.img {
+    position: relative;
+    cursor: pointer;
+}
+.slideshow .img_upload .uploads>.img .controls{
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+.slideshow .img_upload .uploads>.img .controls > *{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    background-color: var(--medium);
+    opacity: 0;
+}
+.slideshow .img_upload .uploads>.img .controls > *:hover{
+    opacity: 0.5;
+}
+.slideshow .img_upload .uploads>.img .controls .left:hover{
+
+}
+.slideshow .img_upload .uploads>.img .controls .right{
+    
+}
+.slideshow .img_upload .uploads>.img .controls .icon{
+    font-size: 40px;
+    opacity: 1 !important;
+}
+
+.specifics {
+    flex: 4;
+}
+
+.specifics .name {
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.specifics .price {
+    color: gray;
+}
+
+.specifics .sizes {
+    display: flex;
+    flex-direction: column;
+}
+
+.specifics .sizes .title {
+    margin-bottom: 0.5em;
+}
+
+.specifics .sizes .options {
+    display: grid;
+    grid-template-columns: repeat(1, fr);
+    gap: 0.5em;
+}
+@media(min-width: 600px) {
+    .specifics .sizes .options {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media(min-width: 800px) {
+    .specifics .sizes .options {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.specifics .sizes .options>.size {
+    text-align: center;
+    border-radius: 3px;
+    background-color: var(--medium);
+    padding: 0.75em;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.specifics .sizes .options>.size:hover{
+    background-color: var(--secondary);
+}
+
+.specifics .actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.specifics .actions .addToCart {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25em;
+    background-color: var(--text);
+    color: var(--background);
+    border: none;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: 0.2s;
+}
+.specifics .actions .addToCart:hover{
+    background-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.specifics .description {
+
+}
+
+.specifics .details {
+
+}
+
+.specifics .edit_toggle{
+    background-color: var(--secondary);
+    color: var(--text);
+    border: none;
+    padding: 0.5em 1em;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.specifics .edit_toggle:hover{
+
+}

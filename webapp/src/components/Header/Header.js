@@ -23,7 +23,7 @@ export default function Header(props){
     return (
         <div className={styles.header}>
             <div className={styles.title}>
-                <span className={styles.bold}>SNEAK3R</span> 👟 SHOP
+                <span className={styles.bold}>SN3AKS</span> 👟
             </div>
             <div className={styles.categories}>
                 {

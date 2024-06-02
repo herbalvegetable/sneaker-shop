@@ -3,6 +3,7 @@
 :root {
     --text: black;
     --background: white;
+    --medium: #dadada;
     /* --primary: #433BFF; */
     --primary: #5550da;
     --secondary: #ACB3FF;
