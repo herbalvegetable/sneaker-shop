@@ -2,6 +2,9 @@ const fs = require('fs');
 const { uploadImage, deleteImage } = require('../aws-buckets/images');
 const { SneakerModel } = require('../models/Sneaker');
 
+const multer = require('multer');
+const upload = multer();
+
 module.exports = app => {
     // GET
     app.get('/sneaker', async (req, res) => {
@@ -10,7 +13,7 @@ module.exports = app => {
         const query = { _id };
         SneakerModel.findOne(query)
             .exec((err, result) => {
-                if(err){
+                if (err) {
                     console.log('crud/sneaker - GET', err);
                     return;
                 }
@@ -19,27 +22,41 @@ module.exports = app => {
             });
     });
     // POST
-    app.post('/sneaker', async (req, res) => {
-        const { name, sizesStr, descBody, detailsBody } = req.body;
+    app.post('/sneaker', upload.fields([
+        { name: 'images[]', maxCount: 7 },
+    ]), async (req, res) => {
+        // console.log('Body', req.body);
+        // console.log('Files', req.files);
+        const { name, price, sizesStr, descBody, detailsBody } = req.body;
 
-        const imgKeys = req.files['images[]'].map(async (file) => {
-            let uploadRes;
-            try {
-                uploadRes = await uploadImage(file);
+        const getFileKeys = async files => {
+            var fKeys = [];
+            for (let file of files) {
+                let uploadRes;
+                try {
+                    uploadRes = await uploadImage(file);
+                    console.log('uploadRes', uploadRes);
+                    fKeys.push(uploadRes.key || '');
+                }
+                catch (err) {
+                    console.log('crud/sneaker - POST: error uploading image');
+                    fKeys.push(null);
+                }
             }
-            catch (err) {
-                console.log('crud/sneaker - POST:', err);
-            }
-            return uploadRes.key || '';
-        });
+            return fKeys;
+        }
+
+        const imgKeys = await getFileKeys(req.files['images[]']);
+
+        console.log('imgKeys', imgKeys);
 
         // save to mongo
-        new SneakerModel({ name, sizesStr, descBody, detailsBody, imgKeys })
+        new SneakerModel({ name, price: parseInt(price), sizesStr, descBody, detailsBody, imgKeys })
             .save()
             .then(result => {
                 console.log('200: Created Sneaker');
                 res.send(result);
             })
-            .catch(err => console.log('crud/sneaker - POST', err));
+            .catch(err => console.log('crud/sneaker - POST (MONGODB)', err));
     });
 }

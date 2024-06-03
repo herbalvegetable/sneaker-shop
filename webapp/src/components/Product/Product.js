@@ -1,24 +1,37 @@
 import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
-import { BsUpload, BsArrowLeftShort, BsArrowRightShort } from 'react-icons/bs';
+import { BsUpload, BsArrowLeftShort, BsArrowRightShort, BsX } from 'react-icons/bs';
 
 import styles from './Product.module.css';
 
 const PLACEHOLDER_IMG_SRC = '/placeholder.png';
 
-function EditField({toggleEdit, title, snkrData, setSnkrData, valKey}){
-    if(!toggleEdit) return null;
-    return <div className={styles.edit_field}>
+function TextAreaField({ toggleEdit, title, snkrData, setSnkrData, valKey }) {
+    if (!toggleEdit) return null;
+    return <div className={styles.textarea_field}>
         <div className={styles.title}>{title}</div>
-        <input 
+        <textarea
             className={styles.input}
-            type='text'
             value={snkrData[valKey]}
             onChange={e => {
-                let newSnkrData = {...snkrData};
+                let newSnkrData = { ...snkrData };
                 newSnkrData[valKey] = e.target.value;
                 setSnkrData(newSnkrData);
-            }}/>
+            }} />
+    </div>
+}
+function InputField({ toggleEdit, title, snkrData, setSnkrData, valKey }) {
+    if (!toggleEdit) return null;
+    return <div className={styles.input_field}>
+        <div className={styles.title}>{title}</div>
+        <input
+            className={styles.input}
+            value={snkrData[valKey]}
+            onChange={e => {
+                let newSnkrData = { ...snkrData };
+                newSnkrData[valKey] = e.target.value;
+                setSnkrData(newSnkrData);
+            }} />
     </div>
 }
 
@@ -32,7 +45,8 @@ export default function Product({ isEdit, onChange }) {
         descBody: 'This section displays a description of the sneakers.',
         detailsBody: 'This sections offers the details of the sneakers.',
     });
-    const [images, setImages] = useState([]); // for editing
+    const [images, setImages] = useState([]); // for editing FILES
+    const [imgPreviews, setImgPreviews] = useState([]);
     const [imgSrcList, setImgSrcList] = useState([]); // for product page
 
     useEffect(() => {
@@ -40,7 +54,7 @@ export default function Product({ isEdit, onChange }) {
 
         onChange({
             ...sneakerData,
-            ...images,
+            images,
         });
     }, [sneakerData, images]);
 
@@ -48,54 +62,72 @@ export default function Product({ isEdit, onChange }) {
 
     useEffect(() => { // for editing
         if (!isEdit) return;
-        setSlides([...(isEdit ? images.map(img => img.data) : imgSrcList), ...new Array(7)].slice(0, 7));
-        console.log([...(isEdit ? images.map(img => img.data) : imgSrcList), ...new Array(7)].slice(0, 7));
+        setSlides([...(isEdit ? images.map(img => URL.createObjectURL(img)) : imgSrcList), ...new Array(7)].slice(0, 7));
+        console.log('images', images);
+
+        return () => {
+            for (var previewUrl of imgPreviews){
+                URL.revokeObjectURL(previewUrl); // free memory when component is unmounted
+            }
+        }
+    }, [imgPreviews]);
+    useEffect(() => { // for editing
+        setImgPreviews(images.map(img => URL.createObjectURL(img)));
     }, [images]);
 
-    const [uploadEditMode, setUploadEditMode] = useState('move'); //move,delete
+    const [uploadEditMode, setUploadEditMode] = useState('move'); // modes: move, delete
     const handleImageUpload = e => {
-        const files = e.target.files;
-        const currImages = [...images];
-        for (let [i, file] of Object.entries(files)) {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
+        // const files = e.target.files;
+        // const currImages = [...images];
+        // for (let [i, file] of Object.entries(files)) {
+        //     const reader = new FileReader();
+        //     reader.readAsDataURL(file);
 
-            reader.onload = () => {
-                currImages.push({
-                    data: reader.result,
-                    name: file.name,
-                });
+        //     reader.onload = () => {
+        //         currImages.push({
+        //             data: reader.result,
+        //             name: file.name,
+        //         });
 
-                if (i >= files.length - 1) {
-                    // once done, set image list
-                    setImages(currImages);
-                    e.target.value = '';
-                }
-            }
+        //         if (i >= files.length - 1) {
+        //             // once done, set image list
+        //             setImages(currImages);
+        //             e.target.value = '';
+        //         }
+        //     }
 
-            reader.onerror = err => console.log(err);
+        //     reader.onerror = err => console.log(err);
 
-            console.log(`Image ${i}: `, file);
-        }
+        //     console.log(`Image ${i}: `, file);
+        // }
+        if(!e.target.files || e.target.files.length === 0) return;
+        let newImages = Object.values(e.target.files);
+        setImages([...images, ...newImages]);
+        console.log('newImages', newImages);
     }
-    const handleDeleteImgUpload = index => {
+    const handleDeleteImg = index => {
         let newImages = [...images];
         newImages.splice(index, 1);
         setImages(newImages);
     }
     const handleMoveImg = (index, dirVal) => {
-        if (index <= 0 || index >= images.length - 1) return;
-
         let nextIndex = index + dirVal;
+        if (nextIndex < 0 || nextIndex > images.length - 1) return;
 
         let newImages = [...images];
         let temp = newImages[index + dirVal];
         newImages[index + dirVal] = newImages[index];
         newImages[index] = temp;
+
+        console.log('newImages: ', newImages);
         setImages(newImages);
     }
+    const [toggleDelete, setToggleDelete] = useState(false);
+    const handleToggleDelete = e => {
+        setToggleDelete(!toggleDelete);
+    }
 
-    const [toggleEdit, setToggleEdit] = useState(false);
+    const [toggleEdit, setToggleEdit] = useState(true);
     const handleToggleEdit = e => {
         setToggleEdit(!toggleEdit);
     }
@@ -136,6 +168,7 @@ export default function Product({ isEdit, onChange }) {
                         <br /><br />
                         <div className={styles.img_upload}>
                             <div className={styles.title}>Images Uploaded: {images.length}/7</div>
+                            <button className={styles.delete_toggle} onClick={handleToggleDelete}>TOGGLE DELETE: {toggleDelete ? 'ON' : 'OFF'}</button>
                             <div className={styles.uploads}>
                                 {
                                     [...new Array(7)].map((_, i) => {
@@ -160,22 +193,29 @@ export default function Product({ isEdit, onChange }) {
                                             return <div className={`${styles.box} ${styles.blank}`} key={i.toString()}></div>
                                         }
                                         else { // image
-                                            const { data } = images[i];
+                                            const url = imgPreviews[i];
                                             return <div className={`${styles.box} ${styles.img}`} key={i.toString()}>
                                                 <Image
                                                     loading='lazy'
-                                                    src={data}
+                                                    src={url}
                                                     layout='fill'
                                                     className={styles.img}
                                                     alt={`Image Upload ${i + 1}`} />
-                                                <div className={styles.controls}>
-                                                    <div className={styles.left} onClick={e => handleMoveImg(i, -1)}>
-                                                        <BsArrowLeftShort className={styles.icon} />
-                                                    </div>
-                                                    <div className={styles.right} onClick={e => handleMoveImg(i, 1)}>
-                                                        <BsArrowRightShort className={styles.icon} />
-                                                    </div>
-                                                </div>
+                                                {
+                                                    toggleDelete ?
+                                                        <div className={styles.delete} onClick={e => handleDeleteImg(i)}>
+                                                            <BsX className={styles.icon}/>
+                                                        </div>
+                                                    :
+                                                        <div className={styles.controls}>
+                                                            <div className={styles.left} onClick={e => handleMoveImg(i, -1)}>
+                                                                <BsArrowLeftShort className={styles.icon} />
+                                                            </div>
+                                                            <div className={styles.right} onClick={e => handleMoveImg(i, 1)}>
+                                                                <BsArrowRightShort className={styles.icon} />
+                                                            </div>
+                                                        </div>
+                                                }
                                             </div>
                                         }
                                     })
@@ -188,13 +228,13 @@ export default function Product({ isEdit, onChange }) {
 
             <div className={styles.specifics}>
 
-                <EditField title={'Sneaker Name'} valKey={'name'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData}/>
                 <div className={styles.name}>{sneakerData.name}</div>
-                <br/>
+                <TextAreaField title={'Sneaker Name'} valKey={'name'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData} />
+                <br />
 
-                <EditField title={'Price'} valKey={'price'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData}/>
                 <div className={styles.price}>${sneakerData.price || 'null'}</div>
-                <br/><br/>
+                <InputField title={'Price'} valKey={'price'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData} />
+                <br /><br />
 
                 <div className={styles.sizes}>
                     <div className={styles.title}>Sizes</div>
@@ -208,26 +248,26 @@ export default function Product({ isEdit, onChange }) {
                         }
                     </div>
                 </div>
-                <EditField title={'Sizes'} valKey={'sizesStr'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData}/>
-                <br/><br/>
+                <TextAreaField title={'Sizes'} valKey={'sizesStr'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData} />
+                <br /><br />
 
                 <div className={styles.actions}>
                     <button className={styles.addToCart} onClick={handleAddToCart}>ADD TO CART</button>
                 </div>
-                <br/><br/>
+                <br /><br />
 
                 <div className={styles.description}>{sneakerData.descBody}</div>
-                <EditField title={'Description'} valKey={'descBody'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData}/>
-                <br/><br/>
+                <TextAreaField title={'Description'} valKey={'descBody'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData} />
+                <br /><br />
 
                 <div className={styles.details}>{sneakerData.detailsBody}</div>
-                <EditField title={'Details'} valKey={'detailsBody'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData}/>
-                <br/><br/>
+                <TextAreaField title={'Details'} valKey={'detailsBody'} toggleEdit={toggleEdit} snkrData={sneakerData} setSnkrData={setSneakerData} />
+                <br /><br />
 
                 {
                     isEdit &&
                     <button className={styles.edit_toggle} onClick={handleToggleEdit}>
-                        TOGGLE EDIT: {toggleEdit ? 'EDITING' : 'PREVIEW'}
+                        TOGGLE EDIT: {toggleEdit ? 'EDITING' : 'PREVIEW'} MODE
                     </button>
                 }
             </div>
