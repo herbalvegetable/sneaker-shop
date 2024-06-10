@@ -127,7 +127,7 @@ export default function Product({ isEdit, onChange }) {
         setToggleDelete(!toggleDelete);
     }
 
-    const [toggleEdit, setToggleEdit] = useState(true);
+    const [toggleEdit, setToggleEdit] = useState(isEdit);
     const handleToggleEdit = e => {
         setToggleEdit(!toggleEdit);
     }

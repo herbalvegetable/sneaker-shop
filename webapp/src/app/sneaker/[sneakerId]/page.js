@@ -12,6 +12,8 @@ export default function SneakerIdPage({ params }) {
 
     return (
         <>
+            <br />
+            <br />
             <Product />
         </>
     )

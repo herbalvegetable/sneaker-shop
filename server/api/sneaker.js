@@ -10,16 +10,15 @@ module.exports = app => {
     app.get('/sneaker', async (req, res) => {
         const { id: _id } = req.params;
 
-        const query = { _id };
-        SneakerModel.findOne(query)
-            .exec((err, result) => {
-                if (err) {
-                    console.log('crud/sneaker - GET', err);
-                    return;
-                }
-                console.log('200: retrieved sneaker with id: ', id);
+        const query = { 
+            ...(_id && {_id}), // _id: conditional prop 
+         };
+        SneakerModel.find(query)
+            .then(result => {
+                console.log('200: retrieved sneakers: ', result);
                 res.send(result);
-            });
+            })
+            .catch(err => console.log('crud/sneaker - GET', err))
     });
     // POST
     app.post('/sneaker', upload.fields([

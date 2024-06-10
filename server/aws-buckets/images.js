@@ -12,17 +12,17 @@ const bucket = {
     }),
 }
 
-function bufferToStream(myBuffer) {
+function bufferToStream(buffer) {
     let tmp = new Duplex();
-    tmp.push(myBuffer);
+    tmp.push(buffer);
     tmp.push(null);
     return tmp;
 }
-function genRandFileKey(){
+function genRandFileKey() {
     return [...new Array(32)].map((_, i) => Math.floor(Math.random() * 16).toString(36)).join('');
 }
 
-function _upload(file) {
+function uploadImage(file) {
     // console.log('file:', file);
     const readableStream = bufferToStream(file.buffer);
     const randFileKey = genRandFileKey();
@@ -35,7 +35,7 @@ function _upload(file) {
     return bucket.instance.upload(params).promise();
 }
 
-function _delete(fileKey) {
+function deleteImage(fileKey) {
     const params = {
         Bucket: bucket.name,
         Key: fileKey,
@@ -50,7 +50,17 @@ function _delete(fileKey) {
     });
 }
 
+function getImage(fileKey) {
+    const params = {
+        Key: fileKey,
+        Bucket: bucket.name,
+    }
+
+    return bucket.instance.getObject(params).createReadStream();
+}
+
 module.exports = {
-    uploadImage: _upload,
-    deleteImage: _delete,
+    uploadImage,
+    deleteImage,
+    getImage,
 }
