@@ -35,7 +35,22 @@ function InputField({ toggleEdit, title, snkrData, setSnkrData, valKey }) {
     </div>
 }
 
-export default function Product({ isEdit, onChange }) {
+export default function Product({ isEdit, onChange, productId }) {
+
+    // for product page, fetch product data from productId
+    useEffect(() => {
+        fetch(`http://localhost:5000/sneaker?id=${productId}`)
+            .then(res => res.json()
+                .then(productData => {
+                    const {name, price, sizesStr, descBody, detailsBody, imgKeys} = productData[0]; // returns one item in arr
+                    console.log(productData);
+                    setSneakerData({name, price, sizesStr, descBody, detailsBody});
+                    setSlides(imgKeys.map(key => `http://localhost:5000/media/${key}`));
+                })
+                .catch(err => console.log(err))
+            )
+            .catch(err => console.log(err));
+    }, []);
 
     // excluding img data | for editing && product page
     const [sneakerData, setSneakerData] = useState({
@@ -46,7 +61,7 @@ export default function Product({ isEdit, onChange }) {
         detailsBody: 'This sections offers the details of the sneakers.',
     });
     const [images, setImages] = useState([]); // for editing FILES
-    const [imgPreviews, setImgPreviews] = useState([]);
+    const [imgPreviews, setImgPreviews] = useState([]); // for editing
     const [imgSrcList, setImgSrcList] = useState([]); // for product page
 
     useEffect(() => {

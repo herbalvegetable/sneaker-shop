@@ -14,7 +14,7 @@ export default function SneakerIdPage({ params }) {
         <>
             <br />
             <br />
-            <Product />
+            <Product productId={sneakerId}/>
         </>
     )
 }

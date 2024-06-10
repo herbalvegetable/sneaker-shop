@@ -8,8 +8,8 @@ const upload = multer();
 module.exports = app => {
     // GET
     app.get('/sneaker', async (req, res) => {
-        const { id: _id } = req.params;
-
+        const { id: _id } = req.query;
+        console.log('params: ', req.params);
         const query = { 
             ...(_id && {_id}), // _id: conditional prop 
          };
